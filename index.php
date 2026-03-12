@@ -36,7 +36,7 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#how-it-works">How It Works</a></li>
  
-    <li><a href="#pricing">Pricing</a></li>
+   
   </ul>
 
   <div class="nav-cta">
@@ -94,7 +94,7 @@
     <div class="hero-actions">
       <a href="index.php?page=register" class="btn-hero-primary">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-        Start Free — No Credit Card
+        Start Now
       </a>
       <a href="#features" class="btn-hero-secondary">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
@@ -170,7 +170,8 @@
      ============================================================ -->
 <section class="features" id="features">
   <div class="features-header reveal">
-    <span class="section-label">Everything Included</span>
+   
+  
     <h2 class="section-title">Built for Sri Lankan<br>Payroll Compliance</h2>
     <p class="section-sub">Every calculation, every deduction, every PDF — exactly as required by Sri Lankan labor law and IRD regulations.</p>
   </div>
@@ -361,70 +362,7 @@
 
 
 
-<!-- ============================================================
-     PRICING
-     ============================================================ -->
-<section class="pricing" id="pricing">
-  <div class="pricing-header reveal">
-    <span class="section-label">Simple Pricing</span>
-    <h2 class="section-title">One Plan for Every Company</h2>
-    <p class="section-sub" style="margin:0 auto;">No hidden fees. No per-employee charges. Just one flat price for everything.</p>
-  </div>
 
-  <div class="pricing-grid">
-    <!-- Free -->
-    <div class="pricing-card reveal">
-      <div class="pricing-plan">Starter</div>
-      <div class="pricing-price">Free</div>
-      <div class="pricing-period">Forever free</div>
-      <div class="pricing-desc">Perfect for small businesses getting started with digital payroll.</div>
-      <ul class="pricing-features">
-        <li><span class="pf-check">✓</span><span>Up to 10 employees</span></li>
-        <li><span class="pf-check">✓</span><span>Leave management</span></li>
-        <li><span class="pf-check">✓</span><span>EPF/ETF calculation</span></li>
-        <li><span class="pf-check">✓</span><span>Basic payslip PDF</span></li>
-        <li><span class="pf-x">✗</span><span>OT &amp; loan tracking</span></li>
-        <li><span class="pf-x">✗</span><span>APIT tax breakdown</span></li>
-      </ul>
-      <a href="index.php?page=register" class="btn-pricing btn-pricing-outline">Get Started Free</a>
-    </div>
-
-    <!-- Pro (Featured) -->
-    <div class="pricing-card featured reveal reveal-delay-1">
-      <div class="pricing-popular">Most Popular</div>
-      <div class="pricing-plan">Professional</div>
-      <div class="pricing-price" style="color:var(--teal);">LKR 2,990 <sub>/mo</sub></div>
-      <div class="pricing-period">per company, billed monthly</div>
-      <div class="pricing-desc">Full-featured payroll for growing companies with complete compliance.</div>
-      <ul class="pricing-features">
-        <li><span class="pf-check">✓</span><span>Unlimited employees</span></li>
-        <li><span class="pf-check">✓</span><span>Full leave management</span></li>
-        <li><span class="pf-check">✓</span><span>EPF / ETF / APIT</span></li>
-        <li><span class="pf-check">✓</span><span>OT calculation</span></li>
-        <li><span class="pf-check">✓</span><span>Loan &amp; advance tracking</span></li>
-        <li><span class="pf-check">✓</span><span>Professional PDF payslips</span></li>
-      </ul>
-      <a href="index.php?page=register" class="btn-pricing btn-pricing-fill">Start 14-Day Free Trial</a>
-    </div>
-
-    <!-- Enterprise -->
-    <div class="pricing-card reveal reveal-delay-2">
-      <div class="pricing-plan">Enterprise</div>
-      <div class="pricing-price">Custom</div>
-      <div class="pricing-period">Contact for pricing</div>
-      <div class="pricing-desc">For large organizations needing dedicated support and custom integrations.</div>
-      <ul class="pricing-features">
-        <li><span class="pf-check">✓</span><span>Everything in Pro</span></li>
-        <li><span class="pf-check">✓</span><span>Multiple company accounts</span></li>
-        <li><span class="pf-check">✓</span><span>Dedicated onboarding</span></li>
-        <li><span class="pf-check">✓</span><span>Priority support</span></li>
-        <li><span class="pf-check">✓</span><span>Custom integrations</span></li>
-        <li><span class="pf-check">✓</span><span>Data export / backup</span></li>
-      </ul>
-      <a href="mailto:info@paysheetpro.lk" class="btn-pricing btn-pricing-outline">Contact Sales</a>
-    </div>
-  </div>
-</section>
 
 <!-- ============================================================
      TESTIMONIALS
@@ -463,14 +401,7 @@
       </div>
     </div>
 
-    <div class="testimonial-card reveal reveal-delay-3">
-      <div class="tcard-stars">★★★★☆</div>
-      <div class="tcard-quote">Loan tracking and automatic installment deductions are a game changer. No more manual tracking in spreadsheets. The system handles everything perfectly every month.</div>
-      <div class="tcard-author">
-        <div class="tcard-avatar ta-4">NF</div>
-        <div><div class="tcard-name">Nimali Fernando</div><div class="tcard-title">Accounts Manager — Greenfield Industries, Matara</div></div>
-      </div>
-    </div>
+    
   </div>
 </section>
 
@@ -485,7 +416,7 @@
     <div class="cta-actions">
       <a href="index.php?page=register" class="btn-hero-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-        Register Your Company — Free
+        Register Your Company - Now
       </a>
       <a href="index.php?page=login" class="btn-hero-secondary">
         Already have an account? Sign In
