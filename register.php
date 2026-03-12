@@ -417,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <!-- ── Login link ── -->
       <div class="login-link">
-        Already have an account? <a href="index.php?page=login">Sign in here</a>
+        Already have an account? <a href="login.php?page=login">Sign in here</a>
       </div>
 
       <!-- ──  badges ── -->
