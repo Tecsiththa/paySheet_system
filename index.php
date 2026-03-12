@@ -41,7 +41,7 @@
 
   <div class="nav-cta">
     <a href="index.php?page=login" class="btn-nav-outline">Sign In</a>
-    <a href="index.php?page=register" class="btn-nav-primary">Sign Up</a>
+    <a href="register.php?page=register" class="btn-nav-primary">Sign Up</a>
   </div>
 
   <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -92,7 +92,7 @@
     </p>
 
     <div class="hero-actions">
-      <a href="index.php?page=register" class="btn-hero-primary">
+      <a href="register.php?page=register" class="btn-hero-primary">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
         Start Now
       </a>
