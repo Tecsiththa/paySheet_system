@@ -40,7 +40,7 @@
   </ul>
 
   <div class="nav-cta">
-    <a href="index.php?page=login" class="btn-nav-outline">Sign In</a>
+    <a href="login.php?page=login" class="btn-nav-outline">Sign In</a>
     <a href="register.php?page=register" class="btn-nav-primary">Sign Up</a>
   </div>
 

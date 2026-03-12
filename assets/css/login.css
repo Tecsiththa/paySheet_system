@@ -1,0 +1,100 @@
+/* ============================================================
+   PaySheet Pro — Login Page Styles
+   Font: Clash Display + Satoshi
+   Theme: Centered card, deep navy, animated teal glow aura
+   Aesthetic: Luxury-minimal, sharp, confident
+   ============================================================ */
+ 
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
+ 
+:root {
+  --navy:         #060d1f;
+  --navy-mid:     #0b1730;
+  --navy-card:    #0f1e3a;
+  --navy-deep:    #07101f;
+  --navy-border:  #182848;
+  --navy-input:   #091222;
+  --teal:         #00e5b0;
+  --teal-dim:     rgba(0, 229, 176, 0.09);
+  --teal-glow:    rgba(0, 229, 176, 0.20);
+  --teal-deep:    #00c49a;
+  --teal-soft:    rgba(0, 229, 176, 0.06);
+  --gold:         #f5c542;
+  --blue:         #4f8eff;
+  --blue-dim:     rgba(79, 142, 255, 0.10);
+  --danger:       #f87171;
+  --danger-dim:   rgba(248, 113, 113, 0.10);
+  --success:      #4ade80;
+  --text-bright:  #eef4ff;
+  --text-mid:     #7a9cc8;
+  --text-faint:   #2e4268;
+  --radius:       16px;
+  --radius-sm:    10px;
+  --transition:   all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+ 
+body {
+  font-family: 'Satoshi', sans-serif;
+  background: var(--navy);
+  color: var(--text-bright);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+ 
+/* ============================================================
+   ANIMATED BACKGROUND
+   ============================================================ */
+.bg-scene {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none; overflow: hidden;
+}
+ 
+/* Grid lines */
+.bg-scene::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 229, 176, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 176, 0.028) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+ 
+/* Radial orbs */
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); pointer-events: none;
+  animation: orbFloat ease-in-out infinite alternate;
+}
+ 
+.orb-1 {
+  width: 680px; height: 680px;
+  background: radial-gradient(circle, rgba(0,229,176,0.11), transparent 65%);
+  top: -220px; left: -180px;
+  animation-duration: 20s; opacity: 0.9;
+}
+ 
+.orb-2 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(79,142,255,0.09), transparent 65%);
+  bottom: -140px; right: -120px;
+  animation-duration: 16s; animation-delay: -8s;
+}
+ 
+.orb-3 {
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(245,197,66,0.07), transparent 65%);
+  top: 60%; left: 60%;
+  animation-duration: 24s; animation-delay: -4s; opacity: 0.7;
+}
+ 
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(28px, 20px) scale(1.06); }
+}
