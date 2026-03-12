@@ -1,11 +1,10 @@
 <?php
 // ============================================================
-
 //   register.php  
 // ============================================================
 require_once 'includes/config.php';
 
-// Redirect if already logged in
+//  if already logged in
 if (isLoggedIn()) {
     header('Location: index.php?page=dashboard');
     exit;
@@ -13,7 +12,7 @@ if (isLoggedIn()) {
 
 $error   = '';
 $success = '';
-$old     = [];   // repopulate fields on error
+$old     = [];   //  fields on error
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ── Collect & sanitize inputs ──
@@ -421,7 +420,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Already have an account? <a href="index.php?page=login">Sign in here</a>
       </div>
 
-      <!-- ── Trust badges ── -->
+      <!-- ──  badges ── -->
       <div class="trust-badges">
         <div class="trust-badge">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3d5478" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
