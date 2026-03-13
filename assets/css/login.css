@@ -98,3 +98,504 @@ body {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(28px, 20px) scale(1.06); }
 }
+
+/* Floating geometric shapes */
+.geo {
+  position: absolute;
+  border: 1px solid rgba(0, 229, 176, 0.08);
+  border-radius: 4px;
+  animation: geoSpin linear infinite;
+}
+ 
+.geo-1 {
+  width: 60px; height: 60px;
+  top: 12%; left: 8%;
+  animation-duration: 25s;
+  transform-origin: center;
+}
+ 
+.geo-2 {
+  width: 40px; height: 40px;
+  top: 70%; left: 85%;
+  animation-duration: 18s; animation-direction: reverse;
+  border-color: rgba(79,142,255,0.08);
+}
+ 
+.geo-3 {
+  width: 80px; height: 80px;
+  top: 80%; left: 10%;
+  animation-duration: 30s;
+  border-radius: 50%;
+  border-color: rgba(245,197,66,0.06);
+}
+ 
+.geo-4 {
+  width: 28px; height: 28px;
+  top: 20%; right: 12%;
+  animation-duration: 14s; animation-direction: reverse;
+}
+ 
+@keyframes geoSpin {
+  from { transform: rotate(0deg) translateY(0); }
+  50%  { transform: rotate(180deg) translateY(-12px); }
+  to   { transform: rotate(360deg) translateY(0); }
+}
+ 
+/* Particle dots */
+.particles {
+  position: absolute; inset: 0;
+}
+ 
+.particle {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: var(--teal);
+  opacity: 0;
+  animation: particleFade ease-in-out infinite;
+}
+ 
+@keyframes particleFade {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50%       { opacity: 0.4; transform: scale(1); }
+}
+ 
+/* ============================================================
+   MAIN WRAPPER
+   ============================================================ */
+.login-wrapper {
+  position: relative; z-index: 10;
+  width: 100%; max-width: 480px;
+  padding: 20px;
+  animation: wrapperReveal 0.7s cubic-bezier(0.4,0,0.2,1) both;
+}
+ 
+@keyframes wrapperReveal {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+ 
+/* ============================================================
+   LOGO BAR (above card)
+   ============================================================ */
+.login-logo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-bottom: 28px;
+  text-decoration: none;
+  animation: fadeDown 0.5s ease 0.1s both;
+}
+ 
+.logo-icon {
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 21px; font-weight: 700;
+  color: var(--navy);
+  box-shadow: 0 0 28px var(--teal-glow), 0 0 60px rgba(0,229,176,0.08);
+  position: relative;
+}
+ 
+.logo-icon::after {
+  content: '';
+  position: absolute; inset: -3px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, var(--teal), transparent, var(--blue));
+  z-index: -1; opacity: 0.3;
+  animation: logoPulse 3s ease infinite;
+}
+ 
+@keyframes logoPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.05); }
+}
+ 
+.logo-text {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.3px;
+}
+ 
+.logo-text span { color: var(--teal); }
+ 
+/* ============================================================
+   LOGIN CARD
+   ============================================================ */
+.login-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 22px;
+  padding: 40px 40px 36px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(0,229,176,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+ 
+/* Top gradient bar */
+.login-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--teal) 30%,
+    var(--blue) 70%,
+    transparent 100%
+  );
+}
+ 
+/* Inner glow pulse */
+.card-glow {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,229,176,0.05), transparent 70%);
+  top: -120px; right: -60px;
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+ 
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.15); }
+}
+ 
+/* Card header */
+.card-header {
+  margin-bottom: 30px;
+  position: relative; z-index: 1;
+}
+ 
+.card-header h1 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 7px;
+  line-height: 1.15;
+}
+ 
+.card-header p {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+ 
+/* ============================================================
+   ALERTS
+   ============================================================ */
+.alert {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 15px; border-radius: var(--radius-sm);
+  font-size: 13px; margin-bottom: 22px;
+  position: relative; z-index: 1;
+  animation: alertPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+ 
+@keyframes alertPop {
+  from { opacity: 0; transform: scale(0.95) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+ 
+.alert-error {
+  background: var(--danger-dim);
+  border: 1px solid rgba(248, 113, 113, 0.22);
+  color: var(--danger);
+}
+ 
+.alert-success {
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.22);
+  color: var(--success);
+}
+ 
+.alert-icon { flex-shrink: 0; margin-top: 1px; }
+ 
+/* ============================================================
+   FORM FIELDS
+   ============================================================ */
+.form-body { position: relative; z-index: 1; }
+ 
+.field {
+  margin-bottom: 18px;
+}
+ 
+.field label {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--text-mid);
+  margin-bottom: 7px;
+  letter-spacing: 0.2px;
+  transition: color 0.2s;
+}
+ 
+.field label .req { color: var(--teal); margin-left: 2px; }
+ 
+.field label .label-link {
+  font-size: 11.5px; font-weight: 500;
+  color: var(--text-faint); text-decoration: none;
+  transition: color 0.2s;
+}
+ 
+.field label .label-link:hover { color: var(--teal); }
+ 
+/* Input wrapper */
+.input-box {
+  position: relative;
+  display: flex; align-items: center;
+}
+ 
+.input-box .i-icon {
+  position: absolute; left: 14px;
+  color: var(--text-faint);
+  display: flex; align-items: center;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+ 
+.input-box input {
+  width: 100%;
+  background: var(--navy-input);
+  border: 1.5px solid var(--navy-border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px 11px 42px;
+  color: var(--text-bright);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+  letter-spacing: 0.1px;
+}
+ 
+.input-box input::placeholder { color: var(--text-faint); font-size: 13.5px; }
+ 
+.input-box input:focus {
+  border-color: var(--teal);
+  background: rgba(9, 18, 34, 0.95);
+  box-shadow: 0 0 0 3px var(--teal-dim), 0 0 16px var(--teal-soft);
+}
+ 
+.input-box input:focus + .i-icon,
+.input-box:focus-within .i-icon { color: var(--teal); }
+ 
+.input-box input.field-error { border-color: var(--danger); }
+.input-box input.field-error:focus { box-shadow: 0 0 0 3px var(--danger-dim); }
+ 
+/* Password toggle button */
+.pass-toggle {
+  position: absolute; right: 12px;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-faint); padding: 5px;
+  display: flex; align-items: center;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+ 
+.pass-toggle:hover { color: var(--teal); background: var(--teal-dim); }
+ 
+/* Field error message */
+.field-err {
+  font-size: 11.5px; color: var(--danger);
+  margin-top: 5px;
+  display: none; align-items: center; gap: 4px;
+}
+.field-err.show { display: flex; }
+ 
+/* ============================================================
+   REMEMBER ME + FORGOT
+   ============================================================ */
+.form-options {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+ 
+.remember-label {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; font-size: 13px; color: var(--text-mid);
+  user-select: none;
+}
+ 
+.remember-label input[type="checkbox"] {
+  width: 16px; height: 16px;
+  border-radius: 5px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+ 
+.forgot-link {
+  font-size: 13px; font-weight: 600;
+  color: var(--teal); text-decoration: none;
+  transition: opacity 0.2s;
+}
+ 
+.forgot-link:hover { opacity: 0.75; }
+ 
+/* ============================================================
+   SUBMIT BUTTON
+   ============================================================ */
+.btn-login {
+  width: 100%; padding: 13px 20px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  color: var(--navy);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+  box-shadow: 0 6px 28px var(--teal-glow);
+  letter-spacing: 0.2px;
+}
+ 
+/* Shine sweep */
+.btn-login::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 0.55s ease;
+}
+ 
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px var(--teal-glow);
+}
+ 
+.btn-login:hover::after { left: 150%; }
+.btn-login:active { transform: translateY(0); box-shadow: 0 4px 16px var(--teal-glow); }
+.btn-login:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+ 
+.btn-login .spinner {
+  width: 18px; height: 18px;
+  border: 2.5px solid rgba(6,13,31,0.25);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+  flex-shrink: 0;
+}
+ 
+@keyframes spin { to { transform: rotate(360deg); } }
+ 
+/* Arrow icon on button */
+.btn-arrow {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+ 
+.btn-login:hover .btn-arrow { transform: translateX(3px); }
+ 
+/* ============================================================
+   DIVIDER + REGISTER LINK
+   ============================================================ */
+.card-divider {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 11px; color: var(--text-faint);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin: 24px 0 20px;
+}
+ 
+.card-divider::before,
+.card-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--navy-border);
+}
+ 
+.btn-register {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 12px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1.5px solid var(--navy-border);
+  color: var(--text-mid);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+ 
+.btn-register:hover {
+  border-color: rgba(0,229,176,0.35);
+  color: var(--teal);
+  background: var(--teal-dim);
+}
+ 
+/* ============================================================
+   CARD FOOTER — trust strip
+   ============================================================ */
+.card-footer {
+  display: flex; align-items: center; justify-content: center;
+  gap: 18px; flex-wrap: wrap;
+  margin-top: 28px; padding-top: 20px;
+  border-top: 1px solid var(--navy-border);
+}
+ 
+.trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text-faint);
+}
+ 
+.trust-item svg { opacity: 0.5; flex-shrink: 0; }
+ 
+/* ============================================================
+   BOTTOM BACK LINK
+   ============================================================ */
+.back-home {
+  text-align: center; margin-top: 22px;
+  font-size: 13px; color: var(--text-faint);
+  animation: fadeDown 0.5s ease 0.3s both;
+}
+ 
+.back-home a {
+  color: var(--text-mid); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: color 0.2s;
+}
+ 
+.back-home a:hover { color: var(--teal); }
+ 
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+.card-header  { animation: fadeDown 0.4s ease 0.15s both; }
+.form-body    { animation: fadeDown 0.4s ease 0.25s both; }
+.card-footer  { animation: fadeDown 0.4s ease 0.35s both; }
+ 
+/* Focus label colour */
+.field:focus-within label { color: var(--teal); }
+ 
+/* ============================================================
+   SHAKE ANIMATION (wrong password)
+   ============================================================ */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%  { transform: translateX(-6px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-5px); }
+  60%  { transform: translateX(5px); }
+  75%  { transform: translateX(-3px); }
+  90%  { transform: translateX(3px); }
+}
+ 
+.shake { animation: shake 0.5s ease; }
+ 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 520px) {
+  .login-wrapper { padding: 16px; }
+  .login-card    { padding: 28px 22px 24px; border-radius: 18px; }
+  .card-header h1 { font-size: 22px; }
+  .form-options { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .card-footer  { gap: 12px; }
+}
