@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Submit -->
         <button type="submit" class="btn-login" id="btnLogin">
-          <span id="btnText">Sign In to Dashboard</span>
+          <span id="btnText">Sign In </span>
           <div class="spinner" id="btnSpinner"></div>
           <svg id="btnArrow" class="btn-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="5" y1="12" x2="19" y2="12"/>
@@ -248,12 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </svg>
         Encrypted &amp; Secure
       </div>
-      <div class="trust-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        IRD Compliant
-      </div>
+      
       <div class="trust-item">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -268,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Back to home -->
   <div class="back-home">
-    <a href="home.php">
+    <a href="index.php">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="19" y1="12" x2="5" y2="12"/>
         <polyline points="12 19 5 12 12 5"/>
