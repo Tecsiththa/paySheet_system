@@ -142,8 +142,10 @@ function validateRegisterForm(e) {
         return false;
     }
     
-    // Show loading
-    showLoading();
+    // Show loading if available
+    if (typeof showLoading === 'function') {
+        showLoading();
+    }
     
     // Submit form
     e.target.submit();
@@ -173,7 +175,9 @@ function validateLoginForm(e) {
         return false;
     }
     
-    showLoading();
+    if (typeof showLoading === 'function') {
+        showLoading();
+    }
     e.target.submit();
 }
 
@@ -217,7 +221,9 @@ function validateEmployeeForm(e) {
         return false;
     }
     
-    showLoading();
+    if (typeof showLoading === 'function') {
+        showLoading();
+    }
     e.target.submit();
 }
 
