@@ -1,0 +1,487 @@
+/**
+ * PaySheetPro - Paysheet Management Styles
+ */
+
+/* ===== MONTH SELECTOR CARD ===== */
+.month-selector-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+}
+
+.month-selector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 20px;
+    align-items: end;
+}
+
+.btn-generate-all {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: var(--font-md);
+}
+
+/* ===== SELECTION INFO ===== */
+.selection-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 24px;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 24px;
+}
+
+.selection-info h3 {
+    font-size: var(--font-xl);
+    margin-bottom: 0;
+}
+
+.selection-info .highlight {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* ===== EMPLOYEES PAYSHEET GRID ===== */
+.employees-paysheet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.employee-paysheet-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    border: 2px solid var(--border-color);
+}
+
+.employee-paysheet-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.employee-paysheet-card.generated {
+    border-color: #10b981;
+}
+
+.employee-paysheet-card.pending {
+    border-color: #f59e0b;
+}
+
+.employee-paysheet-header {
+    padding: 20px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-info-paysheet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.employee-avatar-paysheet {
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.employee-name-paysheet {
+    font-size: var(--font-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.employee-position-paysheet {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-generated {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.employee-paysheet-body {
+    padding: 20px;
+}
+
+.paysheet-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.paysheet-detail:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-size: var(--font-md);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.highlight-amount {
+    font-size: var(--font-lg);
+    color: #10b981;
+}
+
+.employee-paysheet-actions {
+    padding: 16px 20px;
+    background: var(--gray-50);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 12px;
+}
+
+.btn-view,
+.btn-pdf {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-sm);
+    font-weight: 500;
+    text-align: center;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-view {
+    background: #3b82f6;
+    color: white;
+    border: none;
+}
+
+.btn-view:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-pdf {
+    background: #ef4444;
+    color: white;
+    border: none;
+}
+
+.btn-pdf:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.text-muted {
+    color: var(--text-secondary);
+    font-size: var(--font-sm);
+    text-align: center;
+    padding: 10px;
+}
+
+/* ===== PAYSHEET VIEW CONTAINER ===== */
+.paysheet-view-container {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.paysheet-section {
+    padding: 24px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.paysheet-section:last-child {
+    border-bottom: none;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.employee-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--gray-50);
+    border-radius: var(--border-radius-md);
+}
+
+.info-label {
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    font-size: var(--font-sm);
+    color: var(--text-primary);
+}
+
+/* ===== EARNINGS & DEDUCTIONS SECTIONS ===== */
+.earnings-section {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%);
+}
+
+.deductions-section {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.1) 100%);
+}
+
+.amount-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.amount-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.amount-label {
+    font-size: var(--font-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.amount-value {
+    font-size: var(--font-md);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.amount-value.negative {
+    color: #ef4444;
+}
+
+.amount-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--primary-color);
+}
+
+.total-label {
+    font-size: var(--font-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.total-value {
+    font-size: var(--font-xl);
+    font-weight: 700;
+}
+
+.earnings-total {
+    color: #10b981;
+}
+
+.deductions-total {
+    color: #ef4444;
+}
+
+/* ===== NET SALARY SECTION ===== */
+.net-salary-section {
+    padding: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+}
+
+.net-salary-content {
+    margin-bottom: 12px;
+}
+
+.net-salary-label {
+    display: block;
+    font-size: var(--font-lg);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.net-salary-value {
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.net-salary-note {
+    font-size: var(--font-sm);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== PAYSHEET FOOTER ===== */
+.paysheet-footer {
+    padding: 20px 24px;
+    background: var(--gray-50);
+    text-align: center;
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+}
+
+.paysheet-footer p {
+    margin: 4px 0;
+}
+
+/* ===== PAYSHEET HISTORY TABLE ===== */
+.paysheet-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.paysheet-table thead {
+    background: var(--gray-50);
+}
+
+.paysheet-table th {
+    padding: 16px;
+    text-align: left;
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.paysheet-table td {
+    padding: 16px;
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.paysheet-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.paysheet-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.month-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(99, 102, 241, 0.15);
+    color: #6366f1;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.amount-cell {
+    font-weight: 600;
+    text-align: right;
+}
+
+.amount-cell.positive {
+    color: #10b981;
+}
+
+.amount-cell.negative {
+    color: #ef4444;
+}
+
+.amount-cell.net-salary {
+    font-size: var(--font-md);
+    color: #6366f1;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+    .employees-paysheet-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .month-selector-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employees-paysheet-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .amount-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-paysheet-actions {
+        flex-direction: column;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .paysheet-table {
+        min-width: 1000px;
+    }
+
+    .net-salary-value {
+        font-size: 36px;
+    }
+}
