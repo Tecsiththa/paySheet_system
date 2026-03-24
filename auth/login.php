@@ -22,34 +22,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($password)) $errors[] = "Password is required";
     
     if (empty($errors)) {
-        // User check
+        // ⚠️ DIRECT PASSWORD COMPARISON IN SQL - NO VERIFICATION
         $query = "SELECT u.*, c.company_name, c.company_id 
                   FROM users u 
                   LEFT JOIN companies c ON u.company_id = c.company_id 
-                  WHERE u.username = '$username' AND u.user_type = '$user_type' AND u.status = 'active'";
+                  WHERE u.username = '$username' 
+                  AND u.password = '$password' 
+                  AND u.user_type = '$user_type' 
+                  AND u.status = 'active'";
         
         $result = mysqli_query($conn, $query);
         
         if (mysqli_num_rows($result) == 1) {
             $user = mysqli_fetch_assoc($result);
             
-            // Password verify
-            if (password_verify($password, $user['password'])) {
-                // Session set
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['user_type'] = $user['user_type'];
-                $_SESSION['company_id'] = $user['company_id'];
-                $_SESSION['company_name'] = $user['company_name'];
-                
-                if ($user['user_type'] == 'admin') {
-                    redirect('../admin/dashboard.php');
-                } else {
-                    $_SESSION['employee_id'] = $user['linked_employee_id'];
-                    redirect('../employee/employee_dashboard.php');
-                }
+            // Session set (password already matched in SQL query)
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user_type'] = $user['user_type'];
+            $_SESSION['company_id'] = $user['company_id'];
+            $_SESSION['company_name'] = $user['company_name'];
+            
+            if ($user['user_type'] == 'admin') {
+                redirect('../admin/dashboard.php');
             } else {
-                $errors[] = "Invalid username or password";
+                $_SESSION['employee_id'] = $user['linked_employee_id'];
+                redirect('../employee/employee_dashboard.php');
             }
         } else {
             $errors[] = "Invalid username or password";
