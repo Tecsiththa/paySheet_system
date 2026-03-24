@@ -2,6 +2,8 @@
 /**
  * Database Configuration File
  * Paysheet Management System
+ * 
+ *
  */
 
 // Database connection parameters
@@ -18,10 +20,10 @@ if (!$conn) {
     die("Database Connection Failed: " . mysqli_connect_error());
 }
 
-// Set character set to UTF-8 (Sinhala/Tamil support සඳහා)
+// Set character set to UTF-8 (Sinhala/Tamil support )
 mysqli_set_charset($conn, "utf8mb4");
 
-// Session start කරන්න (Login system සඳහා අවශ්‍යයි)
+// Session start කරන්න (Login system )
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -81,7 +83,7 @@ function getCompanyId() {
 
 /**
  * Helper function - Show success message
- *setMessage('success', 'Employee added successfully!');
+ *  setMessage('success', 'Employee added successfully!');
  */
 function setMessage($type, $message) {
     $_SESSION['message'] = $message;
@@ -116,7 +118,7 @@ function formatCurrency($amount) {
 
 /**
  * Helper function - Format date
- * echo formatDate('2024-03-15'); // Output: 15-03-2024
+ *  echo formatDate('2024-03-15'); // Output: 15-03-2024
  */
 function formatDate($date) {
     return date('d-m-Y', strtotime($date));
@@ -135,10 +137,6 @@ function getMonthName($month) {
     return $months[$month] ?? '';
 }
 
-/**
- * Database connection successful message (Optional - Development only)
- * 
- */
-// echo "<!-- Database Connected Successfully -->";
+
 
 ?>

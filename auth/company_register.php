@@ -50,12 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (mysqli_query($conn, $insert_company)) {
             $company_id = mysqli_insert_id($conn);
             
-            // Password hash
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            // ⚠️ PLAIN TEXT PASSWORD - NO HASHING
+            // REMOVED: $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             
-            // Admin user insert
+            // Admin user insert with PLAIN TEXT password
             $insert_user = "INSERT INTO users (company_id, username, password, user_type) 
-                           VALUES ('$company_id', '$username', '$hashed_password', 'admin')";
+                           VALUES ('$company_id', '$username', '$password', 'admin')";
             
             if (mysqli_query($conn, $insert_user)) {
                 setMessage('success', 'Company registered successfully! Please login.');
