@@ -75,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result_user = mysqli_query($conn, $query_user);
         $user = mysqli_fetch_assoc($result_user);
         
-        // Verify current password using helper function
-        if (!verifyPassword($current_password, $user['password'])) {
+        // ⚠️ DIRECT PASSWORD COMPARISON - NO VERIFICATION
+        if ($current_password !== $user['password']) {
             $errors[] = "Current password is incorrect";
         }
         
@@ -90,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if (empty($errors)) {
-            $hashed_password = hashPassword($new_password);
-            $update_password = "UPDATE users SET password = '$hashed_password' WHERE user_id = '$user_id'";
+            // ⚠️ PLAIN TEXT PASSWORD UPDATE - NO HASHING
+            $update_password = "UPDATE users SET password = '$new_password' WHERE user_id = '$user_id'";
             
             if (mysqli_query($conn, $update_password)) {
                 setMessage('success', 'Password changed successfully!');
