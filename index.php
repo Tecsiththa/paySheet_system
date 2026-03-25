@@ -25,7 +25,7 @@
             </div>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
-                <a href="#about" class="nav-link">About</a>
+                <a href="about.php" class="nav-link">About</a>
                 <a href="auth/login.php" class="btn-nav-login">Login</a>
                 <a href="auth/company_register.php" class="btn-nav-register">Get Started</a>
             </div>
