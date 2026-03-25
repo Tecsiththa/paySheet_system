@@ -11,7 +11,8 @@ $username = $_SESSION['username'];
 $company_name = $_SESSION['company_name'];
 
 // Fetch employee details
-$emp_query = "SELECT * FROM employees WHERE user_id = '$user_id'";
+$employee_id = $_SESSION['employee_id'];
+$emp_query = "SELECT * FROM employees WHERE employee_id = '$employee_id'";
 $emp_result = mysqli_query($conn, $emp_query);
 $employee = mysqli_fetch_assoc($emp_result);
 $employee_id = $employee['employee_id'];

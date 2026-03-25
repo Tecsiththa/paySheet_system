@@ -11,7 +11,8 @@ $username = $_SESSION['username'];
 $company_name = $_SESSION['company_name'];
 
 // Fetch employee details
-$emp_query = "SELECT * FROM employees WHERE user_id = '$user_id'";
+$employee_id = $_SESSION['employee_id'];
+$emp_query = "SELECT * FROM employees WHERE employee_id = '$employee_id'";
 $emp_result = mysqli_query($conn, $emp_query);
 $employee = mysqli_fetch_assoc($emp_result);
 $employee_id = $employee['employee_id'];
@@ -26,7 +27,7 @@ $leave_balance = mysqli_num_rows($leave_balance_result) > 0 ? mysqli_fetch_assoc
 $status_filter = isset($_GET['status']) ? clean($conn, $_GET['status']) : '';
 $year_filter = isset($_GET['year']) ? clean($conn, $_GET['year']) : $current_year;
 
-$history_query = "SELECT lr.*, lt.leave_type_name, u.username as approved_by_name
+$history_query = "SELECT lr.*, lt.leave_name, u.username as approved_by_name
                   FROM leave_records lr
                   JOIN leave_types lt ON lr.leave_type_id = lt.leave_type_id
                   LEFT JOIN users u ON lr.approved_by = u.user_id
@@ -153,7 +154,7 @@ $rejected_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as cou
                         <div class="card-icon">📅</div>
                         <div class="card-content">
                             <div class="card-label">Annual Leave</div>
-                            <div class="card-value"><?php echo $leave_balance['annual_leaves']; ?> <span class="card-unit">days</span></div>
+                            <div class="card-value"><?php echo $leave_balance['annual_leave_remaining']; ?> <span class="card-unit">days</span></div>
                             <div class="card-subtitle">Out of 14 days</div>
                         </div>
                     </div>
@@ -162,7 +163,7 @@ $rejected_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as cou
                         <div class="card-icon">🏖️</div>
                         <div class="card-content">
                             <div class="card-label">Casual Leave</div>
-                            <div class="card-value"><?php echo $leave_balance['casual_leaves']; ?> <span class="card-unit">days</span></div>
+                            <div class="card-value"><?php echo $leave_balance['casual_leave_remaining']; ?> <span class="card-unit">days</span></div>
                             <div class="card-subtitle">Out of 7 days</div>
                         </div>
                     </div>
@@ -171,7 +172,7 @@ $rejected_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as cou
                         <div class="card-icon">🏥</div>
                         <div class="card-content">
                             <div class="card-label">Sick Leave</div>
-                            <div class="card-value"><?php echo $leave_balance['sick_leaves']; ?> <span class="card-unit">days</span></div>
+                            <div class="card-value"><?php echo $leave_balance['sick_leave_remaining']; ?> <span class="card-unit">days</span></div>
                             <div class="card-subtitle">Out of 7 days</div>
                         </div>
                     </div>
@@ -260,8 +261,8 @@ $rejected_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as cou
                                 <?php while ($record = mysqli_fetch_assoc($history_result)): ?>
                                     <tr>
                                         <td>
-                                            <span class="leave-type-badge <?php echo strtolower(str_replace(' ', '-', $record['leave_type_name'])); ?>">
-                                                <?php echo htmlspecialchars($record['leave_type_name']); ?>
+                                            <span class="leave-type-badge <?php echo strtolower(str_replace(' ', '-', $record['leave_name'])); ?>">
+                                                <?php echo htmlspecialchars($record['leave_name']); ?>
                                             </span>
                                         </td>
                                         <td><?php echo formatDate($record['start_date']); ?></td>

@@ -14,6 +14,20 @@ $company_name = $_SESSION['company_name'];
 $selected_month = isset($_POST['month']) ? clean($conn, $_POST['month']) : date('n');
 $selected_year = isset($_POST['year']) ? clean($conn, $_POST['year']) : date('Y');
 
+// Generate paysheet for a single employee from card action
+if (isset($_GET['action']) && $_GET['action'] === 'generate' && isset($_GET['employee_id'])) {
+    $single_id = clean($conn, $_GET['employee_id']);
+    $single_result = generatePaysheet($conn, $single_id, $selected_month, $selected_year);
+
+    if ($single_result['success']) {
+        setMessage('success', 'Paysheet generated successfully for employee ID ' . $single_id);
+    } else {
+        setMessage('error', 'Paysheet not generated: ' . ($single_result['message'] ?? 'Unknown error'));
+    }
+
+    redirect('generate_paysheet.php?month=' . $selected_month . '&year=' . $selected_year);
+}
+
 // Fetch all active employees
 $employees_query = "SELECT * FROM employees WHERE company_id = '$company_id' AND status = 'active' ORDER BY employee_name";
 $employees_result = mysqli_query($conn, $employees_query);
@@ -432,7 +446,9 @@ mysqli_data_seek($employees_result, 0); // Reset pointer
                                     <span>📄 Download PDF</span>
                                 </a>
                             <?php else: ?>
-                                <span class="text-muted">Generate paysheet to view details</span>
+                                <a href="generate_paysheet.php?action=generate&employee_id=<?php echo $employee['employee_id']; ?>&month=<?php echo $selected_month; ?>&year=<?php echo $selected_year; ?>" class="btn-primary" onclick="return confirm('Generate paysheet for <?php echo htmlspecialchars($employee['employee_name']); ?>?')">
+                                    <span>⚙️ Generate Paysheet</span>
+                                </a>
                             <?php endif; ?>
                         </div>
                     </div>

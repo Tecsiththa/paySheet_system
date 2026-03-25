@@ -11,7 +11,8 @@ $username = $_SESSION['username'];
 $company_name = $_SESSION['company_name'];
 
 // Fetch employee details
-$emp_query = "SELECT * FROM employees WHERE user_id = '$user_id'";
+$employee_id = $_SESSION['employee_id'];
+$emp_query = "SELECT * FROM employees WHERE employee_id = '$employee_id'";
 $emp_result = mysqli_query($conn, $emp_query);
 
 if (mysqli_num_rows($emp_result) == 0) {
@@ -36,7 +37,7 @@ $leave_balance_result = mysqli_query($conn, $leave_balance_query);
 $leave_balance = mysqli_num_rows($leave_balance_result) > 0 ? mysqli_fetch_assoc($leave_balance_result) : null;
 
 // Fetch recent leave requests
-$recent_leaves_query = "SELECT lr.*, lt.leave_type_name 
+$recent_leaves_query = "SELECT lr.*, lt.leave_name 
                         FROM leave_records lr
                         JOIN leave_types lt ON lr.leave_type_id = lt.leave_type_id
                         WHERE lr.employee_id = '$employee_id'
@@ -60,9 +61,9 @@ if ($leave_balance) {
     $initial_annual = 14;
     $initial_casual = 7;
     $initial_sick = 7;
-    $total_leaves_used = ($initial_annual - $leave_balance['annual_leaves']) + 
-                        ($initial_casual - $leave_balance['casual_leaves']) + 
-                        ($initial_sick - $leave_balance['sick_leaves']);
+    $total_leaves_used = ($initial_annual - $leave_balance['annual_leave_remaining']) + 
+                        ($initial_casual - $leave_balance['casual_leave_remaining']) + 
+                        ($initial_sick - $leave_balance['sick_leave_remaining']);
 }
 ?>
 <!DOCTYPE html>
@@ -246,17 +247,17 @@ if ($leave_balance) {
                         <div class="leave-balance-grid">
                             <div class="balance-item">
                                 <div class="balance-type">Annual Leave</div>
-                                <div class="balance-count"><?php echo $leave_balance['annual_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['annual_leave_remaining']; ?></div>
                                 <div class="balance-label">days remaining</div>
                             </div>
                             <div class="balance-item">
                                 <div class="balance-type">Casual Leave</div>
-                                <div class="balance-count"><?php echo $leave_balance['casual_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['casual_leave_remaining']; ?></div>
                                 <div class="balance-label">days remaining</div>
                             </div>
                             <div class="balance-item">
                                 <div class="balance-type">Sick Leave</div>
-                                <div class="balance-count"><?php echo $leave_balance['sick_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['sick_leave_remaining']; ?></div>
                                 <div class="balance-label">days remaining</div>
                             </div>
                         </div>
@@ -279,8 +280,8 @@ if ($leave_balance) {
                         <div class="leave-list">
                             <?php while ($leave = mysqli_fetch_assoc($recent_leaves_result)): ?>
                                 <div class="leave-item">
-                                    <div class="leave-type-badge <?php echo strtolower(str_replace(' ', '-', $leave['leave_type_name'])); ?>">
-                                        <?php echo htmlspecialchars($leave['leave_type_name']); ?>
+                                    <div class="leave-type-badge <?php echo strtolower(str_replace(' ', '-', $leave['leave_name'])); ?>">
+                                        <?php echo htmlspecialchars($leave['leave_name']); ?>
                                     </div>
                                     <div class="leave-dates">
                                         <?php echo formatDate($leave['start_date']) . ' - ' . formatDate($leave['end_date']); ?>

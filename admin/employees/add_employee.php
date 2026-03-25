@@ -14,13 +14,17 @@ $company_name = $_SESSION['company_name'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $employee_name = clean($conn, $_POST['employee_name']);
     $employee_nic = clean($conn, $_POST['employee_nic']);
-    $employee_address = clean($conn, $_POST['employee_address']);
-    $employee_phone = clean($conn, $_POST['employee_phone']);
     $employee_email = clean($conn, $_POST['employee_email']);
+    $employee_phone = clean($conn, $_POST['employee_phone']);
+    $employee_address = clean($conn, $_POST['employee_address']);
     $position = clean($conn, $_POST['position']);
     $department = clean($conn, $_POST['department']);
-    $basic_salary = clean($conn, str_replace(',', '', $_POST['basic_salary']));
+    $basic_salary = clean($conn, $_POST['basic_salary']);
     $joining_date = clean($conn, $_POST['joining_date']);
+    
+    // NEW FIELDS: Username & Password
+    $emp_username = clean($conn, $_POST['emp_username']);
+    $emp_password = $_POST['emp_password'];
     
     $errors = [];
     
@@ -28,41 +32,72 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($employee_name)) $errors[] = "Employee name is required";
     if (empty($employee_nic)) $errors[] = "NIC is required";
     if (empty($employee_email)) $errors[] = "Email is required";
-    if (empty($basic_salary) || !is_numeric($basic_salary)) $errors[] = "Valid salary is required";
+    if (empty($position)) $errors[] = "Position is required";
+    if (empty($department)) $errors[] = "Department is required";
+    if (empty($basic_salary)) $errors[] = "Basic salary is required";
+    if (empty($joining_date)) $errors[] = "Date of joining is required";
     
-    // Check NIC uniqueness
-    $check_nic = mysqli_query($conn, "SELECT employee_id FROM employees WHERE employee_nic = '$employee_nic'");
-    if (mysqli_num_rows($check_nic) > 0) {
-        $errors[] = "This NIC is already registered";
+    // NEW VALIDATION: Username & Password
+    if (empty($emp_username)) $errors[] = "Username is required";
+    if (empty($emp_password)) $errors[] = "Password is required";
+    if (strlen($emp_password) < 6) $errors[] = "Password must be at least 6 characters";
+    
+    // Check if email already exists
+    $check_email = mysqli_query($conn, "SELECT employee_id FROM employees WHERE employee_email = '$employee_email' AND company_id = '$company_id'");
+    if (mysqli_num_rows($check_email) > 0) {
+        $errors[] = "Email already exists";
     }
     
-    // Check Email uniqueness
-    $check_email = mysqli_query($conn, "SELECT employee_id FROM employees WHERE employee_email = '$employee_email'");
-    if (mysqli_num_rows($check_email) > 0) {
-        $errors[] = "This email is already registered";
+    // Check if NIC already exists
+    $check_nic = mysqli_query($conn, "SELECT employee_id FROM employees WHERE employee_nic = '$employee_nic' AND company_id = '$company_id'");
+    if (mysqli_num_rows($check_nic) > 0) {
+        $errors[] = "NIC already exists";
+    }
+    
+    // NEW CHECK: Username already exists
+    $check_username = mysqli_query($conn, "SELECT user_id FROM users WHERE username = '$emp_username'");
+    if (mysqli_num_rows($check_username) > 0) {
+        $errors[] = "Username already exists. Please choose another username.";
     }
     
     if (empty($errors)) {
-        $insert_query = "INSERT INTO employees 
-                        (company_id, employee_name, employee_nic, employee_address, employee_phone, 
-                         employee_email, position, department, basic_salary, joining_date) 
-                        VALUES 
-                        ('$company_id', '$employee_name', '$employee_nic', '$employee_address', '$employee_phone',
-                         '$employee_email', '$position', '$department', '$basic_salary', '$joining_date')";
+        // Insert employee
+        $insert_employee = "INSERT INTO employees (
+            company_id, employee_name, employee_nic, employee_email, 
+            employee_phone, employee_address, position, department, 
+            basic_salary, joining_date, status
+        ) VALUES (
+            '$company_id', '$employee_name', '$employee_nic', '$employee_email',
+            '$employee_phone', '$employee_address', '$position', '$department',
+            '$basic_salary', '$joining_date', 'active'
+        )";
         
-        if (mysqli_query($conn, $insert_query)) {
+        if (mysqli_query($conn, $insert_employee)) {
             $employee_id = mysqli_insert_id($conn);
             
-            // Create leave balance for current year
-            $current_year = date('Y');
-            $leave_balance_query = "INSERT INTO leave_balance (employee_id, year) 
-                                   VALUES ('$employee_id', '$current_year')";
-            mysqli_query($conn, $leave_balance_query);
+            // NEW: Create user account for employee (PLAIN TEXT PASSWORD)
+            $insert_user = "INSERT INTO users (
+                company_id, username, password, user_type, linked_employee_id, status
+            ) VALUES (
+                '$company_id', '$emp_username', '$emp_password', 'employee', '$employee_id', 'active'
+            )";
             
-            setMessage('success', 'Employee added successfully!');
-            redirect('view_employees.php');
+            if (mysqli_query($conn, $insert_user)) {
+                // Initialize leave balance for current year
+                $current_year = date('Y');
+                $init_leave = "INSERT INTO leave_balance (employee_id, year, annual_leave_remaining, casual_leave_remaining, sick_leave_remaining)
+                              VALUES ('$employee_id', '$current_year', 14, 7, 7)";
+                mysqli_query($conn, $init_leave);
+                
+                setMessage('success', "Employee added successfully! Login credentials - Username: $emp_username, Password: $emp_password");
+                redirect('view_employees.php');
+            } else {
+                // If user creation fails, delete the employee record
+                mysqli_query($conn, "DELETE FROM employees WHERE employee_id = '$employee_id'");
+                $errors[] = "Failed to create user account. Please try again.";
+            }
         } else {
-            $errors[] = "Failed to add employee. Please try again.";
+            $errors[] = "Failed to add employee";
         }
     }
 }
@@ -182,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="page-header">
                 <div>
                     <h1 class="page-title">Add New Employee</h1>
-                    <p class="page-subtitle">Fill in the employee details below</p>
+                    <p class="page-subtitle">Fill in the employee details and create login account</p>
                 </div>
                 <div class="page-actions">
                     <a href="view_employees.php" class="btn-secondary">
@@ -202,11 +237,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endif; ?>
 
-            <div class="employee-form-card">
-                <form method="POST" action="" id="employeeForm">
+            <div class="form-card">
+                <form method="POST" action="" id="addEmployeeForm">
                     
+                    <!-- Personal Information Section -->
                     <div class="form-section">
-                        <h3 class="form-section-title">
+                        <h3 class="section-title">
                             <span class="section-icon">👤</span>
                             Personal Information
                         </h3>
@@ -215,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="form-group">
                                 <label for="employee_name" class="form-label">
                                     <span class="label-icon">👤</span>
-                                    Full Name
+                                    Full Name *
                                 </label>
                                 <input type="text" id="employee_name" name="employee_name" class="form-input" 
                                        placeholder="Enter full name" required 
@@ -224,13 +260,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             <div class="form-group">
                                 <label for="employee_nic" class="form-label">
-                                    <span class="label-icon">🆔</span>
-                                    NIC Number
+                                    <span class="label-icon">🪪</span>
+                                    NIC Number *
                                 </label>
                                 <input type="text" id="employee_nic" name="employee_nic" class="form-input" 
-                                       placeholder="XXXXXXXXXXV or XXXXXXXXXXXX" required 
+                                       placeholder="Enter NIC number" required 
                                        value="<?php echo isset($employee_nic) ? htmlspecialchars($employee_nic) : ''; ?>">
-                                <small class="form-hint">Old format: 123456789V | New format: 199012345678</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="employee_email" class="form-label">
+                                    <span class="label-icon">✉️</span>
+                                    Email Address *
+                                </label>
+                                <input type="email" id="employee_email" name="employee_email" class="form-input" 
+                                       placeholder="employee@example.com" required 
+                                       value="<?php echo isset($employee_email) ? htmlspecialchars($employee_email) : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -239,33 +284,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     Phone Number
                                 </label>
                                 <input type="tel" id="employee_phone" name="employee_phone" class="form-input" 
-                                       placeholder="0XXXXXXXXX" required 
+                                       placeholder="0XX XXX XXXX" 
                                        value="<?php echo isset($employee_phone) ? htmlspecialchars($employee_phone) : ''; ?>">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="employee_email" class="form-label">
-                                    <span class="label-icon">✉️</span>
-                                    Email Address
-                                </label>
-                                <input type="email" id="employee_email" name="employee_email" class="form-input" 
-                                       placeholder="employee@example.com" required 
-                                       value="<?php echo isset($employee_email) ? htmlspecialchars($employee_email) : ''; ?>">
                             </div>
 
                             <div class="form-group form-group-full">
                                 <label for="employee_address" class="form-label">
                                     <span class="label-icon">📍</span>
-                                    Residential Address
+                                    Address
                                 </label>
                                 <textarea id="employee_address" name="employee_address" class="form-input" 
-                                          rows="3" placeholder="Enter complete address" required><?php echo isset($employee_address) ? htmlspecialchars($employee_address) : ''; ?></textarea>
+                                          rows="3" placeholder="Enter full address"><?php echo isset($employee_address) ? htmlspecialchars($employee_address) : ''; ?></textarea>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Employment Details Section -->
                     <div class="form-section">
-                        <h3 class="form-section-title">
+                        <h3 class="section-title">
                             <span class="section-icon">💼</span>
                             Employment Details
                         </h3>
@@ -274,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="form-group">
                                 <label for="position" class="form-label">
                                     <span class="label-icon">💼</span>
-                                    Position
+                                    Position *
                                 </label>
                                 <input type="text" id="position" name="position" class="form-input" 
                                        placeholder="e.g., Software Engineer" required 
@@ -284,39 +320,117 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="form-group">
                                 <label for="department" class="form-label">
                                     <span class="label-icon">🏢</span>
-                                    Department
+                                    Department *
                                 </label>
-                                <input type="text" id="department" name="department" class="form-input" 
-                                       placeholder="e.g., IT Department" required 
-                                       value="<?php echo isset($department) ? htmlspecialchars($department) : ''; ?>">
+                                <select id="department" name="department" class="form-input" required>
+                                    <option value="">Select Department</option>
+                                    <option value="IT" <?php echo (isset($department) && $department == 'IT') ? 'selected' : ''; ?>>IT</option>
+                                    <option value="HR" <?php echo (isset($department) && $department == 'HR') ? 'selected' : ''; ?>>HR</option>
+                                    <option value="Finance" <?php echo (isset($department) && $department == 'Finance') ? 'selected' : ''; ?>>Finance</option>
+                                    <option value="Marketing" <?php echo (isset($department) && $department == 'Marketing') ? 'selected' : ''; ?>>Marketing</option>
+                                    <option value="Sales" <?php echo (isset($department) && $department == 'Sales') ? 'selected' : ''; ?>>Sales</option>
+                                    <option value="Operations" <?php echo (isset($department) && $department == 'Operations') ? 'selected' : ''; ?>>Operations</option>
+                                    <option value="Administration" <?php echo (isset($department) && $department == 'Administration') ? 'selected' : ''; ?>>Administration</option>
+                                    <option value="Other" <?php echo (isset($department) && $department == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="basic_salary" class="form-label">
                                     <span class="label-icon">💰</span>
-                                    Basic Salary (LKR)
+                                    Basic Salary (LKR) *
                                 </label>
-                                <input type="text" id="basic_salary" name="basic_salary" class="form-input format-number" 
-                                       placeholder="50000.00" required 
-                                       value="<?php echo isset($basic_salary) ? htmlspecialchars($basic_salary) : ''; ?>">
+                                <input type="number" id="basic_salary" name="basic_salary" class="form-input format-number" 
+                                       placeholder="e.g., 100000" step="0.01" required 
+                                       value="<?php echo isset($basic_salary) ? $basic_salary : ''; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="joining_date" class="form-label">
                                     <span class="label-icon">📅</span>
-                                    Joining Date
+                                    Date of Joining *
                                 </label>
-                                <input type="date" id="joining_date" name="joining_date" class="form-input" 
-                                       required max="<?php echo date('Y-m-d'); ?>"
-                                       value="<?php echo isset($joining_date) ? htmlspecialchars($joining_date) : date('Y-m-d'); ?>">
+                                <input type="date" id="joining_date" name="joining_date" class="form-input" required 
+                                       value="<?php echo isset($joining_date) ? $joining_date : ''; ?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW SECTION: Login Credentials -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <span class="section-icon">🔐</span>
+                            Login Account Details
+                        </h3>
+                        <p class="section-description">
+                            Create a username and password for employee to access their dashboard
+                        </p>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="emp_username" class="form-label">
+                                    <span class="label-icon">👤</span>
+                                    Username *
+                                </label>
+                                <input type="text" id="emp_username" name="emp_username" class="form-input" 
+                                       placeholder="Choose a username" required 
+                                       value="<?php echo isset($emp_username) ? htmlspecialchars($emp_username) : ''; ?>">
+                                <small style="color: var(--text-secondary); font-size: 12px; margin-top: 4px; display: block;">
+                                    Employee will use this to login
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emp_password" class="form-label">
+                                    <span class="label-icon">🔒</span>
+                                    Password *
+                                </label>
+                                <input type="password" id="emp_password" name="emp_password" class="form-input" 
+                                       placeholder="Create a password (min. 6 characters)" required>
+                                <small style="color: var(--text-secondary); font-size: 12px; margin-top: 4px; display: block;">
+                                    Minimum 6 characters required
+                                </small>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <div class="alert alert-info" style="margin: 0;">
+                                    <strong>📌 Note:</strong> Make sure to save or share these login credentials with the employee. 
+                                    They will need these to access their employee dashboard.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Salary Preview (Optional) -->
+                    <div class="form-section" id="salaryBreakdownPreview" style="display: none;">
+                        <h3 class="section-title">
+                            <span class="section-icon">📊</span>
+                            Salary Breakdown Preview
+                        </h3>
+                        
+                        <div class="preview-grid">
+                            <div class="preview-item">
+                                <span class="preview-label">EPF (12%):</span>
+                                <span class="preview-value" id="epfPreview">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">ETF (3%):</span>
+                                <span class="preview-value" id="etfPreview">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Hourly Rate:</span>
+                                <span class="preview-value" id="hourlyRatePreview">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">OT Rate (1.5x):</span>
+                                <span class="preview-value" id="otRatePreview">-</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn-primary btn-large">
-                            <span>Add Employee</span>
-                            <span class="btn-icon">✓</span>
+                            <span>Add Employee & Create Account</span>
                         </button>
                         <a href="view_employees.php" class="btn-secondary btn-large">
                             <span>Cancel</span>
@@ -331,10 +445,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="../../accests/js/main.js"></script>
     <script src="../../accests/js/validation.js"></script>
+    <script src="../../accests/js/employee.js"></script>
     <script>
         // Sidebar Toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Auto-generate username suggestion from employee name
+        document.getElementById('employee_name').addEventListener('blur', function() {
+            const usernameField = document.getElementById('emp_username');
+            if (!usernameField.value) {
+                const name = this.value.trim().toLowerCase();
+                const firstName = name.split(' ')[0];
+                usernameField.value = firstName.replace(/[^a-z0-9]/g, '');
+            }
+        });
+
+        // Show/hide password toggle
+        const passwordInput = document.getElementById('emp_password');
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.textContent = '👁️';
+        toggleBtn.style.cssText = 'position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 20px;';
+        
+        const passwordGroup = passwordInput.parentElement;
+        passwordGroup.style.position = 'relative';
+        passwordGroup.appendChild(toggleBtn);
+        
+        toggleBtn.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                this.textContent = '👁️';
+            }
         });
     </script>
 </body>

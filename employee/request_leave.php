@@ -11,7 +11,8 @@ $username = $_SESSION['username'];
 $company_name = $_SESSION['company_name'];
 
 // Fetch employee details
-$emp_query = "SELECT * FROM employees WHERE user_id = '$user_id'";
+$employee_id = $_SESSION['employee_id'];
+$emp_query = "SELECT * FROM employees WHERE employee_id = '$employee_id'";
 $emp_result = mysqli_query($conn, $emp_query);
 $employee = mysqli_fetch_assoc($emp_result);
 $employee_id = $employee['employee_id'];
@@ -180,21 +181,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="balance-item annual">
                             <div class="balance-icon">📅</div>
                             <div class="balance-info">
-                                <div class="balance-count"><?php echo $leave_balance['annual_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['annual_leave_remaining']; ?></div>
                                 <div class="balance-label">Annual Leave</div>
                             </div>
                         </div>
                         <div class="balance-item casual">
                             <div class="balance-icon">🏖️</div>
                             <div class="balance-info">
-                                <div class="balance-count"><?php echo $leave_balance['casual_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['casual_leave_remaining']; ?></div>
                                 <div class="balance-label">Casual Leave</div>
                             </div>
                         </div>
                         <div class="balance-item sick">
                             <div class="balance-icon">🏥</div>
                             <div class="balance-info">
-                                <div class="balance-count"><?php echo $leave_balance['sick_leaves']; ?></div>
+                                <div class="balance-count"><?php echo $leave_balance['sick_leave_remaining']; ?></div>
                                 <div class="balance-label">Sick Leave</div>
                             </div>
                         </div>
@@ -216,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <option value="">-- Select Leave Type --</option>
                                 <?php while ($type = mysqli_fetch_assoc($leave_types_result)): ?>
                                     <option value="<?php echo $type['leave_type_id']; ?>">
-                                        <?php echo htmlspecialchars($type['leave_type_name']) . ' (' . $type['days_allowed'] . ' days)'; ?>
+                                        <?php echo htmlspecialchars($type['leave_name']) . ' (' . $type['days_per_year'] . ' days)'; ?>
                                     </option>
                                 <?php endwhile; ?>
                             </select>
