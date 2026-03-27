@@ -510,7 +510,7 @@
                     <p class="team-bio">5+ years experience in It industry</p>
                 </div>
                 <div class="team-member">
-                    <div class="team-avatar">👩‍💻</div>
+                    <div class="team-avatar">👨‍💼</div>
                     <div class="team-name">sithum wijethunga</div>
                     <div class="team-role">Lead Developer</div>
                     <p class="team-bio">Expert in building scalable web applications</p>

@@ -7,6 +7,86 @@
     <link rel="stylesheet" href="accests/css/style.css">
     <link rel="stylesheet" href="accests/css/landing.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .footer {
+            background: #05122a;
+            color: #f2f4f7;
+            padding: 60px 20px;
+            margin-top: 100px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            align-items: flex-start;
+        }
+        .footer-section h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+        .footer-section p,
+        .footer-section li {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.78);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .footer-section ul li a:hover {
+            color: #00a4ff;
+        }
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+            margin: 38px 0;
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.68);
+        }
+        .footer-social {
+            display: flex;
+            gap: 14px;
+        }
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.78);
+            text-decoration: none;
+            font-size: 20px;
+        }
+        @media(max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media(max-width: 640px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Animated Background -->
@@ -26,8 +106,7 @@
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="about.php" class="nav-link">About</a>
-                <a href="auth/login.php" class="btn-nav-login">Login</a>
-                <a href="auth/company_register.php" class="btn-nav-register">Get Started</a>
+                <a href="contact.php" class="nav-link">Contact</a>
             </div>
         </div>
     </nav>
@@ -147,7 +226,46 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p>&copy; 2024 PaySheetPro. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>About PaySheetPro</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin-top: 10px;">
+                        Revolutionizing payroll management with cutting-edge automation and intelligent solutions for modern businesses.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="index.php" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Home</a></li>
+                        <li style="margin-bottom: 12px;"><a href="about.php" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">About Us</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#features" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Features</a></li>
+                        <li style="margin-bottom: 12px;"><a href="auth/company_register.php" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 12px;"><a href="#features" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Automated Payroll</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#features" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Leave Management</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#features" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Reports</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#features" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Loan Tracking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 8px; color: rgba(255, 255, 255, 0.7);">📧 info@paysheetpro.com</li>
+                        <li style="margin-bottom: 8px; color: rgba(255, 255, 255, 0.7);">📞 +94 70 123 4567</li>
+                        <li style="margin-bottom: 8px; color: rgba(255, 255, 255, 0.7);">📍 Colombo, Sri Lanka</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                
+                
+            </div>
         </div>
     </footer>
 
