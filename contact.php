@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             max-width: 600px;
             margin: 0 auto;
             opacity: 0.9;
+            color: #000;
         }
 
         .contact-container {
@@ -249,6 +250,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 padding: 30px;
             }
         }
+
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 60px 20px 20px;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--transition-normal);
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 40px 0;
+            padding-top: 20px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            text-decoration: none;
+            transition: color var(--transition-normal);
+        }
+
+        .footer-social a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -363,6 +458,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </div>
 
-   
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>About PaySheetPro</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+                        Revolutionizing payroll management with cutting-edge automation and intelligent solutions for modern businesses.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="about.php">About Us</a></li>
+                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="auth/company_register.php">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="index.php#features">Automated Payroll</a></li>
+                        <li><a href="index.php#features">Leave Management</a></li>
+                        <li><a href="index.php#features">Reports</a></li>
+                        <li><a href="index.php#features">Loan Tracking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li style="margin-bottom: 8px;">📧 info@paysheetpro.com</li>
+                        <li style="margin-bottom: 8px;">📞 +94 70 123 4567</li>
+                        <li style="margin-bottom: 8px;">📍 Colombo, Sri Lanka</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+           
+        </div>
+    </footer>
+
 </body>
 </html>
